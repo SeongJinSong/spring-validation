@@ -174,6 +174,11 @@ public class ValidationItemControllerV2 {
                             RedirectAttributes redirectAttributes,
                             Model model) {
 
+        //typeMismatch Check
+        if(bindingResult.hasErrors()){
+            return "validation/v2/addForm";
+        }
+
         log.info("objectName = {}", bindingResult.getObjectName());
         log.info("target = {}", bindingResult.getTarget());
 
