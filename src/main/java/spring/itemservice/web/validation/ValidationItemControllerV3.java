@@ -51,6 +51,19 @@ public class ValidationItemControllerV3 {
                             BindingResult bindingResult,
                             RedirectAttributes redirectAttributes) {
 
+        /**
+         * @ScriptAssert는 기능이 너무 약해서 실무에서 쓰긴 힘들다.
+         * 그냥 자바 로직으로 처리하자!
+         */
+        //특정 필드 예외가 아닌 전체 예외
+        if (item.getPrice() != null && item.getQuantity() != null) {
+            int resultPrice = item.getPrice() * item.getQuantity();
+            if (resultPrice < 10000) {
+                bindingResult.reject("totalPriceMin", new Object[]{10000,
+                        resultPrice}, null);
+            }
+        }
+
         if(bindingResult.hasErrors()){
             return "validation/v3/addForm";
         }
